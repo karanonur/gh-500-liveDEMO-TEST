@@ -2,6 +2,7 @@
   "name": "dependabot-demo",
   "version": "1.0.0",
   "dependencies": {
-    "minimist": "0.0.8"
+    "minimist": "0.0.8",
+    "lodash": "4.17.11"
   }
 }
