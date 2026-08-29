@@ -2,6 +2,6 @@
   "name": "dependabot-demo",
   "version": "1.0.0",
   "dependencies": {
-    "minimist": "0.0.8"
+    "minimist": "1.2.6"
   }
 }
