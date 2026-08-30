@@ -1,3 +1,4 @@
 AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
 AWS_SECRET_ACCESS_KEY=abcdefghijklmnopqrstuvwxyz1234567890ABCD
+github_pat_11ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890
   # Bu Secret Scanning çalışıyor mu bunun için konuldu. TEST
