@@ -1,0 +1,31 @@
+@page
+@model _1202demoapp.Pages.SecureModel
+@{
+    ViewData["Title"] = "Secure Form Example";
+}
+
+<h1>@ViewData["Title"]</h1>
+<p class="text-success">This page demonstrates proper logging practices.</p>
+
+<div class="row">
+    <div class="col-md-6">
+        <form method="post">
+            <div class="mb-3">
+                <label asp-for="UserName" class="form-label">Username</label>
+                <input asp-for="UserName" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label asp-for="Data" class="form-label">Data</label>
+                <input asp-for="Data" class="form-control" />
+            </div>
+            <button type="submit" class="btn btn-success">Submit Securely</button>
+        </form>
+
+        @if (Model.Success)
+        {
+            <div class="alert alert-success mt-3">
+                Operation completed successfully and logged!
+            </div>
+        }
+    </div>
+</div>
