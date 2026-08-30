@@ -1,2 +1,3 @@
 AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
+AWS_SECRET_ACCESS_KEY=abcdefghijklmnopqrstuvwxyz1234567890ABCD
   # Bu Secret Scanning çalışıyor mu bunun için konuldu. TEST
