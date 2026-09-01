@@ -7,25 +7,23 @@ namespace _1202demoapp.Controllers
     [Route("api/[controller]")]
     public class KargoSorguController : ControllerBase
     {
-        private readonly string connectionString = "Server=localhost;Database=SuratKargoDB;Trusted_Connection=True;";
-
         [HttpGet("takip/{takipNo}")]
         public IActionResult GetKargoDurumu(string takipNo)
         {
-            // ❌ ZAAFİYET 1: SQL Injection (Kullanıcı girdisi doğrudan sorgu dizisine eklenmiş)
+            // ❌ ZAAFİYET 1: SQL Injection (Kullanıcıdan gelen 'takipNo' doğrudan sorgu dizesine ekleniyor)
             string query = "SELECT * FROM KargoGonderileri WHERE TakipNo = '" + takipNo + "'";
 
-            SqlConnection conn = new SqlConnection(connectionString);
-            SqlCommand cmd = new SqlCommand(query, conn);
-            conn.Open();
-
-            // ❌ KOD HATASI 1: Unhandled Resource Leak (using bloğu kullanılmamış, bağlantı/reader açık kalıyor)
-            SqlDataReader reader = cmd.ExecuteReader(); 
+            // ❌ KOD HATASI 2: Resource Leak (SqlConnection ve SqlDataReader 'using' bloğuna alınmamış, açık kalıyor)
+            SqlConnection connection = new SqlConnection("Server=localhost;Database=SuratKargoDB;Trusted_Connection=True;");
+            SqlCommand command = new SqlCommand(query, connection);
+            
+            connection.Open();
+            SqlDataReader reader = command.ExecuteReader();
 
             if (reader.Read())
             {
-                string aliciAdi = reader["AliciAdi"].ToString();
-                return Ok(new { TakipNo = takipNo, Alici = aliciAdi });
+                string alici = reader["AliciAdi"].ToString();
+                return Ok(new { TakipNo = takipNo, Alici = alici });
             }
 
             return NotFound("Kargo bulunamadı.");
