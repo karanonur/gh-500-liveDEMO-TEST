@@ -16,7 +16,7 @@ def kargo_sorgu():
     
     # ❌ ZAAFİYET 2: SQL Injection (Sink)
     query = "SELECT * FROM kargo_gonderileri WHERE takip_no = '" + str(takip_no) + "'"
-    cursor.execute(query) # CodeQL bu noktayı doğrudan yakalar!
+    cursor.execute(query) # CodeQL bu noktayı doğrudan Yakalar...!
     
     result = cursor.fetchall()
     return {"status": "ok", "data": result}
