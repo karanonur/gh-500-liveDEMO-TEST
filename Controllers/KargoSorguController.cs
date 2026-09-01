@@ -7,26 +7,23 @@ namespace _1202demoapp.Controllers
     [Route("api/[controller]")]
     public class KargoSorguController : ControllerBase
     {
-        [HttpGet("takip/{takipNo}")]
-        public IActionResult GetKargoDurumu(string takipNo)
+        [HttpGet("sorgula")]
+        public IActionResult KargoSorgula()
         {
-            // ❌ ZAAFİYET 1: SQL Injection (Kullanıcıdan gelen 'takipNo' doğrudan sorgu dizesine ekleniyor)
+            // ❌ CodeQL Taint Engine'in doğrudan yakaladığı HTTP Girdisi (Source)
+            string takipNo = Request.Query["takipNo"];
+
+            // ❌ ZAAFİYET 1: SQL Injection (String birleştirme)
             string query = "SELECT * FROM KargoGonderileri WHERE TakipNo = '" + takipNo + "'";
 
-            // ❌ KOD HATASI 2: Resource Leak (SqlConnection ve SqlDataReader 'using' bloğuna alınmamış, açık kalıyor)
+            // ❌ ZAAFİYET 2: Resource Leak (using kullanılmamış, açık bağlantı)
             SqlConnection connection = new SqlConnection("Server=localhost;Database=SuratKargoDB;Trusted_Connection=True;");
             SqlCommand command = new SqlCommand(query, connection);
             
             connection.Open();
-            SqlDataReader reader = command.ExecuteReader();
+            SqlDataReader reader = command.ExecuteReader(); // Sink (Hedef)
 
-            if (reader.Read())
-            {
-                string alici = reader["AliciAdi"].ToString();
-                return Ok(new { TakipNo = takipNo, Alici = alici });
-            }
-
-            return NotFound("Kargo bulunamadı.");
+            return Ok("Sorgu çalıştırıldı.");
         }
     }
 }
